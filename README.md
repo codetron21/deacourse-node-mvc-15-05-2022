@@ -11,13 +11,6 @@ Application that can do CRUD (CREATE, READ, UPDATE, DELETE) operation for a hero
 
 ## Architecture
 - Using MVC pattern.
-  - Model
-   - Hero.
-   - History.
-  - Controller
-   - Hero.
-   - History.
-  - View
-   - index (list page).
-   - detail page.
-   - history page.
+  - Model: Hero & History.
+  - Controller: Hero & History.
+  - View: index (list page), detail page & history page.
