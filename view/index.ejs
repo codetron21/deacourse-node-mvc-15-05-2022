@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lange="en">
+  <head>
+    <title>HERO LIST</title>
+    <link rel="stylesheet" href="/style/list.css" type="text/css" />
+  </head>
+  <body>
+    <h1><%= heroes.title %></h1>
+
+    <div class="form-container">
+      <form
+        action="/heroes/add"
+        method="post"
+        onsubmit="alert('success add data'); return true;"
+      >
+        <input type="text" name="name" placeholder="Hero name" />
+        <input type="text" name="role" placeholder="Hero role" />
+        <input class="button-primary" type="submit" value="ADD HERO" />
+      </form>
+    </div>
+
+    <% if(heroes.data.length) { %>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <th>NO</th>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>ROLE</th>
+          <th colspan="2">ACTION</th>
+        </thead>
+        <% for(let i =0; i < heroes.data.length; i++) {%>
+        <tbody>
+          <td><%= i+1 %></td>
+          <td><%= heroes.data[i].id %></td>
+          <td><%= heroes.data[i].name %></td>
+          <td><%= heroes.data[i].role %></td>
+          <td>
+            <div class="action-container">
+              <a class="link-edit" href="/heroes/<%= heroes.data[i].id %>"
+                >Edit</a
+              >
+
+              <form
+                action="/heroes/remove"
+                method="post"
+                onsubmit="return confirm('Are you sure you want to delete a hero?');"
+              >
+                <input
+                  type="text"
+                  name="id"
+                  value="<%= heroes.data[i].id %>"
+                  hidden
+                />
+                <input class="button-delete" type="submit" value="Delete" />
+              </form>
+            </div>
+          </td>
+        </tbody>
+        <% } %>
+      </table>
+    </div>
+    <% } else {%>
+    <h3 class="error-message">Data heroes is empty</h3>
+    <% } %>
+
+    <a class="button-history" href="/history">History</a>
+
+    <footer>
+      <p>Created by Adadua Karunia Putera</p>
+    </footer>
+  </body>
+</html>

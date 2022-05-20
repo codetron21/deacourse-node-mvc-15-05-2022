@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lange="en">
+  <head>
+    <title>HERO DETAIL</title>
+    <link rel="stylesheet" href="/style/detail.css" type="text/css" />
+  </head>
+  <body>
+    <h1><%= hero.title %></h1>
+    <% if(hero.errorMessage) { %>
+    <h3 class="error-message"><%= hero.errorMessage %></h3>
+    <% } else {%>
+
+    <div class="detail-form-container">
+      <form
+        action="/heroes/update"
+        method="post"
+        onsubmit="return handleOnSubmit()"
+      >
+        <input type="text" name="id" value="<%= hero.data[0].id %>" hidden />
+        <input type="text" name="skills" hidden />
+        <input type="text" name="name" value="<%= hero.data[0].name %>" />
+        <input type="text" name="role" value="<%= hero.data[0].role %>" />
+        <input class="button-primary" type="submit" value="UPDATE HERO" />
+        <br />
+      </form>
+
+      <div class="button-skills-container">
+        <button id="button-add-skills" class="button-primary" type="button">
+          Add Skills
+        </button>
+
+        <button
+          id="button-remove-skills"
+          class="button-delete"
+          type="button"
+          style="padding: 8px 24px"
+        >
+          Remove Skills
+        </button>
+      </div>
+
+      <ul id="skill-list-input-items" style="list-style-type: none"></ul>
+    </div>
+
+    <% } %>
+
+    <footer>
+      <p>Created by Adadua Karunia Putera</p>
+    </footer>
+
+    <script>
+      let dataItems = [];
+      const buttonAddSkills = document.getElementById("button-add-skills");
+      const buttonRemoveSkills = document.getElementById(
+        "button-remove-skills"
+      );
+      const listSkilss = document.getElementById("skill-list-input-items");
+
+      const itemElement = (count) => `
+        <label style="padding: 4px">Skill ${count}</label>
+          <div style="height: 8px"></div>
+          <input
+            style="width: 100%"
+            type="text"
+            placeholder="Enter the skill"
+          />
+      `;
+
+      function handleOnSubmit() {
+        const isConfirmed = confirm("Are you sure you want to update a hero?");
+
+        if (!isConfirmed) return false;
+
+        const skillValues = dataItems.map((i) => i.value);
+        console.log(skillValues);
+
+        document.getElementsByName("skills")[0].value = skillValues;
+
+        return true;
+      }
+
+      function mapSkillItems(skills) {
+        if (!skills) {
+          buttonRemoveSkills.style.visibility = "hidden";
+          return;
+        }
+
+        const skillValues = skills.trim().split(",");
+
+        console.log(skillValues);
+
+        skillValues.map((v) => {
+          const item = document.createElement("li");
+
+          item.style.padding = "4px 0";
+          item.innerHTML = itemElement(dataItems.length + 1);
+          item.getElementsByTagName("input")[0].value = v;
+
+          dataItems.push(item.lastElementChild);
+          console.log(dataItems);
+
+          listSkilss.appendChild(item);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("<%- hero.title %>");
+        mapSkillItems("<%- hero.data[0].skills %>");
+
+        buttonAddSkills.addEventListener("click", () => {
+          const item = document.createElement("li");
+
+          item.style.padding = "4px 0";
+          item.innerHTML = itemElement(dataItems.length + 1);
+
+          dataItems.push(item.lastElementChild);
+          console.log(dataItems);
+
+          listSkilss.appendChild(item);
+          buttonRemoveSkills.style.visibility = "visible";
+        });
+
+        buttonRemoveSkills.addEventListener("click", () => {
+          dataItems.pop();
+          console.log(dataItems);
+
+          if (!dataItems.length) {
+            buttonRemoveSkills.style.visibility = "hidden";
+          }
+
+          listSkilss.removeChild(listSkilss.lastElementChild);
+        });
+      });
+    </script>
+  </body>
+</html>

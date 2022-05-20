@@ -1,0 +1,60 @@
+@import "styles.css";
+
+table {
+    border-collapse: collapse;
+    border-bottom: 2px solid mediumspringgreen;
+    margin-bottom: 40px;
+    text-align: center;
+    width: 100%;
+}
+
+thead{
+    background-color: mediumspringgreen;
+    border-bottom: 2px solid teal;
+}
+
+th, td{
+    padding: 8px;
+}
+
+tbody:nth-child(odd){
+    background-color: aliceblue;
+}
+
+.action-container{
+    display: flex;
+    justify-content: center;
+}
+
+.action-container > a {
+    margin-right: 8px;
+}
+
+.action-container > form{
+    margin-left: 8px;
+}
+
+.button-history{
+    background-color: dodgerblue;
+    border: none;
+    border-radius: 16px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 24px 24px;
+    position: absolute;
+    top: 10px;
+    right: 5%;
+    text-decoration: none;
+}
+
+.button-history:hover {
+    background-color: deepskyblue;
+    box-shadow: 0px 0px 4px blue;
+    color: white;
+    cursor: pointer;
+}
+
+.table-container{
+    padding: 0 20%;
+}
